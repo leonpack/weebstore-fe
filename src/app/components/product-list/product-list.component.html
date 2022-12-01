@@ -1,0 +1,30 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <h2>Loại: {{ currentCategoryName }}</h2>
+    <hr>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- loop over the collection of products -->
+        <div *ngFor="let item of products" class="col-md-3">
+          <div class="product-box">
+            <!-- add clickable for image (routerLink) -->
+            <a routerLink="/products/{{ item.id }}">
+            <img src="{{ item.imageUrl }}" class="img-responsive">
+            </a>
+            <!-- add clickable for product name (routerLink) -->
+            <br>
+            <a routerLink="/products/{{ item.id }}" style="text-decoration: none;">
+            <h1>{{ item.name }}</h1>
+            </a>
+            <div class="price">{{ item.unitPrice | currency:'USD'}}
+              <a href="#" class="primary-btn">Thêm vào giỏ</a>
+            </div>
+
+          </div>
+        </div>
+        <!-- if the product is empty, display a message to user -->
+        <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">Không tìm thấy sản phẩm.</div>
+      </div>
+    </div>
+  </div>
+</div>

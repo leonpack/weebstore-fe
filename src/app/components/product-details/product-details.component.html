@@ -1,0 +1,13 @@
+<div class="detail-section">
+  <div class="container-fluid">
+    <img src="{{ product.imageUrl }}" class="detail-img">
+    <h3 style="font-weight: 1000;">{{ product.name }}</h3>
+    <div class="price"> {{product.unitPrice | currency:'USD'}} </div>
+    <a href="#" class="primary-btn">Thêm vào giỏ</a>
+    <hr>
+    <h4>Mô tả sản phẩm</h4>
+    <p>{{product.description}}</p>
+    <a routerLink="/products" style="text-decoration: none;">quay về trang chủ</a>
+  </div>
+
+</div>
