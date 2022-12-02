@@ -1,6 +1,9 @@
 <div class="main-content">
   <div class="section-content section-content-p30">
     <h2>Loại: {{ currentCategoryName }}</h2>
+    <marquee direction="right">
+      Khuyến mãi sốc: mua 2 tặng 1, tính tiền 3!!! Nhanh tay lên!!!
+    </marquee>
     <hr>
     <div class="container-fluid">
       <div class="row">
@@ -25,6 +28,25 @@
         <!-- if the product is empty, display a message to user -->
         <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">Không tìm thấy sản phẩm.</div>
       </div>
+      <!-- begin footer -->
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-9" style="padding-left: 30%">
+                <ngb-pagination
+                  [(page)]="thePageNumber"
+                  [pageSize]="thePageSize"
+                  [collectionSize]="theTotalElements"
+                  (pageChange)="listProducts()">
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end footer -->
     </div>
   </div>
 </div>
