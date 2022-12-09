@@ -20,9 +20,9 @@
             <h1>{{ item.name }}</h1>
             </a>
             <div class="price">{{ item.unitPrice | currency:'USD'}}
-              <a href="#" class="primary-btn">Thêm vào giỏ</a>
+              <!-- <a href="#" class="primary-btn">Thêm vào giỏ</a> -->
+              <button (click)="addToCart(item)" class="btn btn-primary btn-sm">Thêm vào giỏ</button>
             </div>
-
           </div>
         </div>
         <!-- if the product is empty, display a message to user -->
@@ -39,8 +39,20 @@
                   [(page)]="thePageNumber"
                   [pageSize]="thePageSize"
                   [collectionSize]="theTotalElements"
+                  [maxSize]="5"
+                  [boundaryLinks]="true"
                   (pageChange)="listProducts()">
                 </ngb-pagination>
+              </div>
+              <!-- select page size -->
+              <div class="col-md-3 mt-2" style="text-align: right;">
+                <span class="mr-2">Page Size</span>
+                <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                  <option selected="true">5</option>
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                </select>
               </div>
             </div>
           </div>

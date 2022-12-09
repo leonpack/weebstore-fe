@@ -12,6 +12,9 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 //support pagination
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 
 const routes: Routes = [
@@ -30,13 +33,20 @@ const routes: Routes = [
     ProductListComponent,
     ProductCategoryMenuComponent,
     SearchComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    })
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

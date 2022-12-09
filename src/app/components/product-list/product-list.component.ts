@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
+import { CartItem } from '../../common/cart-item';
+import { CartService } from '../../services/cart.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-list',
@@ -9,6 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+
 
   products: Product[] = [];
 
@@ -19,11 +23,12 @@ export class ProductListComponent implements OnInit {
 
   //new properties for pagination
   thePageNumber: number = 1
-  thePageSize: number = 10
+  thePageSize: number = 5
   theTotalElements: number = 0
 
+  previousKeyword: string = ""
 
-  constructor(public productService: ProductService, private route: ActivatedRoute) { }
+  constructor(public productService: ProductService, private route: ActivatedRoute, public cartService: CartService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -44,13 +49,28 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    //search for product using that 'keyword'
-    this.productService.searchProduct(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    //if we have different keyword than previous
+    //then set thePageNumber = 1
 
+    if(this.previousKeyword != theKeyword){
+      this.thePageNumber = 1
+    }
+
+    this.previousKeyword = theKeyword
+    console.log(theKeyword+" and "+this.thePageNumber)
+
+    //search for product using that 'keyword'
+    this.productService.searchProductPagination(this.thePageNumber - 1, this.thePageSize, theKeyword).subscribe(this.processResult())
+
+  }
+
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products
+      this.thePageNumber = data.page.number + 1
+      this.thePageSize = data.page.size
+      this.theTotalElements = data.page.totalElements
+    }
   }
 
   handleListProducts(){
@@ -79,12 +99,19 @@ export class ProductListComponent implements OnInit {
 
     //get the products for the given category id
     this.productService.getProductListPagination(this.thePageNumber - 1, this.thePageSize, this.currentCategoryId).subscribe(
-      data => {
-        this.products = data._embedded.products;
-        this.thePageNumber = data.page.number + 1;
-        this.thePageSize = data.page.size;
-        this.theTotalElements = data.page.totalElements;
-      }
+      this.processResult()
     );
+  }
+
+  updatePageSize(myPageSize: string) {
+    this.thePageSize = +myPageSize
+    this.thePageNumber = 1
+    this.listProducts()
+  }
+
+  addToCart(item: Product) {
+    const theItemInCart = new CartItem(item)
+    this.cartService.addToCart(theItemInCart)
+    this.toastr.success(`Đã thêm ${item.name} vào giỏ hàng thành công!`)
   }
 }
