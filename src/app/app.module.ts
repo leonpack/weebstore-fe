@@ -13,11 +13,13 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 //support pagination
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { ToastNoAnimationModule, ToastrModule, ToastNoAnimation } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component'
 
 
 const routes: Routes = [
+  {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
   {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id/:name', component: ProductListComponent},
@@ -34,7 +36,8 @@ const routes: Routes = [
     ProductCategoryMenuComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -43,7 +46,7 @@ const routes: Routes = [
     NgbModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 5000,
+      timeOut: 3000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     })

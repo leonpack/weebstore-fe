@@ -61,7 +61,6 @@ export class ProductListComponent implements OnInit {
 
     //search for product using that 'keyword'
     this.productService.searchProductPagination(this.thePageNumber - 1, this.thePageSize, theKeyword).subscribe(this.processResult())
-
   }
 
   processResult() {

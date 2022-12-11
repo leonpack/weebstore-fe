@@ -1,8 +1,8 @@
 <div class="main-content">
   <div class="section-content section-content-p30">
     <h2>Loại: {{ currentCategoryName }}</h2>
-    <marquee direction="right">
-      Khuyến mãi sốc: mua 2 tặng 1, tính tiền 3!!! Nhanh tay lên!!!
+    <marquee direction="right" hspace=80>
+      <span style="color: red;">Khuyến mãi sốc:</span> mua 2 tặng 1, tính tiền 3!!! Nhanh tay lên!!!
     </marquee>
     <hr>
     <div class="container-fluid">
@@ -21,7 +21,7 @@
             </a>
             <div class="price">{{ item.unitPrice | currency:'USD'}}
               <!-- <a href="#" class="primary-btn">Thêm vào giỏ</a> -->
-              <button (click)="addToCart(item)" class="btn btn-primary btn-sm">Thêm vào giỏ</button>
+            <button (click)="addToCart(item)" class="btn btn-success btn-sm" style="font-weight: bold;font-size: 15px;">Thêm vào giỏ</button>
             </div>
           </div>
         </div>
